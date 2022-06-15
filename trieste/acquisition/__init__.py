@@ -1,0 +1,83 @@
+# Copyright 2020 The Trieste Contributors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+r"""
+The acquisition process aims to find the optimal point(s) at which to next evaluate the objective
+function, with the aim of minimising it. The functionality in this package implements that process.
+It typically uses the current observations of the objective function, or a posterior over those
+observations.
+
+In this library, the acquisition rule is the central object of the API, while acquisition functions
+are supplementary. This is because some acquisition rules, such as Thompson sampling,
+do not require an acquisition function. This contrasts with other libraries which may consider
+the acquisition function as the central component of this process and assume Efficient Global
+Optimization (EGO) for the acquisition rule.
+
+This package contains acquisition rules, as implementations of
+:class:`~trieste.acquisition.rule.AcquisitionRule`, and acquisition functions. It also contains
+:class:`AcquisitionFunctionBuilder`\ s which provide a common interface for the rules to build
+acquisition functions.
+
+Acquisition rules in this library that use acquisition functions, such as
+:class:`EfficientGlobalOptimization`, *maximize* these functions. This defines the sign the
+acquisition function should take. Additionally, acquisition functions and builders in this library
+are designed to minimize the objective function. For example, we do not provide an implementation of
+UCB.
+"""
+from . import optimizer, rule
+from .combination import Product, Reducer, Sum
+from .function import (
+    GIBBON,
+    AugmentedExpectedImprovement,
+    BatchMonteCarloExpectedHypervolumeImprovement,
+    BatchMonteCarloExpectedImprovement,
+    ExpectedConstrainedHypervolumeImprovement,
+    ExpectedConstrainedImprovement,
+    ExpectedHypervolumeImprovement,
+    ExpectedImprovement,
+    Fantasizer,
+    LocalPenalization,
+    MinValueEntropySearch,
+    NegativeLowerConfidenceBound,
+    NegativePredictiveMean,
+    PredictiveVariance,
+    ProbabilityOfFeasibility,
+    augmented_expected_improvement,
+    batch_ehvi,
+    expected_hv_improvement,
+    expected_improvement,
+    gibbon_quality_term,
+    gibbon_repulsion_term,
+    hard_local_penalizer,
+    lower_confidence_bound,
+    min_value_entropy_search,
+    predictive_variance,
+    probability_of_feasibility,
+    soft_local_penalizer,
+)
+from .interface import (
+    AcquisitionFunction,
+    AcquisitionFunctionBuilder,
+    AcquisitionFunctionClass,
+    GreedyAcquisitionFunctionBuilder,
+    PenalizationFunction,
+    SingleModelAcquisitionBuilder,
+    SingleModelGreedyAcquisitionBuilder,
+    UpdatablePenalizationFunction,
+)
+from .sampler import (
+    ExactThompsonSampler,
+    GumbelSampler,
+    ThompsonSampler,
+    ThompsonSamplerFromTrajectory,
+)

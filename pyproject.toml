@@ -1,0 +1,103 @@
+# Copyright 2020 The Trieste Contributors
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+[build-system]
+requires = [
+    "setuptools>=42",
+    "wheel",
+]
+build-backend = "setuptools.build_meta"
+
+[tool.mypy]
+files = "trieste,tests,notebooks/**/*.py"
+ignore_missing_imports = true
+warn_redundant_casts = true
+warn_unused_ignores = true
+strict_equality = true
+
+[[tool.mypy.overrides]]
+module = ["trieste.*", "tests.*"]
+disallow_any_generics = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+addopts = "--doctest-modules"
+testpaths = [
+    "trieste",
+    "tests/util",
+    "tests/unit",
+    "tests/integration",
+]
+
+[tool.black]
+line-length = 100
+target-version = ['py37']
+include = '\.py$'
+extend-exclude = '\.pct.py$'
+
+[tool.isort]
+profile = "black"
+skip_gitignore = true
+skip_glob = "docs/notebooks"
+line_length = 100
+
+[tool.taskipy.tasks]
+tests = "pytest --mypy --cov trieste --cov-report html:htmlcov --durations 6"
+alltests = "pytest --mypy --durations 6 --runslow yes"
+slowtests = "pytest --mypy --durations 6 --runslow only"
+quicktests = "pytest -x --ff -rN -Wignore --ignore-glob=tests/integration/*"
+mypy = "mypy"
+pylint = "pytest --pylint --cache-clear -m pylint -v trieste"
+check_format = "pytest -v --black --flake8 --isort -m 'black or flake8 or isort'"
+format = "black . && flake8 . && isort . && black -l 80 notebooks/*pct.py"
+
+[tool.coverage.report]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "@overload",
+    "def __repr__",
+    "if __name__ == __main__:",
+]
+
+[tool.pylint.'MESSAGES CONTROL']
+disable = [
+    "duplicate-code",
+    "invalid-characters-in-docstring",
+    "invalid-name",
+    "invalid-unary-operand-type",
+    "line-too-long",
+    "locally-disabled",
+    "missing-module-docstring",
+    "no-else-return",
+    "no-self-use",
+    "no-value-for-parameter",
+    "redefined-builtin",
+    "redundant-keyword-arg",
+    "suppressed-message",
+    "too-few-public-methods",
+    "too-many-ancestors",
+    "too-many-lines",
+    "too-many-instance-attributes",
+    "too-many-public-methods",
+    "too-many-arguments",
+    "too-many-locals",
+    "too-many-statements",
+    "too-many-boolean-expressions",
+    "too-many-nested-blocks",
+    "unexpected-keyword-arg",
+    "unused-argument",
+    "unsubscriptable-object",
+    "wrong-spelling-in-comment",
+    "wrong-spelling-in-docstring",
+]
