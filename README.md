@@ -1,6 +1,6 @@
 # Mean-Variance Inference Under Gaussian Process for Robust Bayesian Optimization 
 
-This repository contains the code and experiments done in the work ["Spectral Representation of Robustness Measures for Optimization Under Input Uncertainty"](https://icml.cc/virtual/2022/spotlight/17742) by Jixiang Qing, Tom Dhaene and Ivo Couckuyt.
+This repository contains the code and experiments done in the work ["Spectral Representation of Robustness Measures for Optimization Under Input Uncertainty"](https://proceedings.mlr.press/v162/qing22a.html) by Jixiang Qing, Tom Dhaene and Ivo Couckuyt.
 
 ![](https://github.com/TsingQAQ/Image-Lib/blob/master/figure_for_pwebsite/QFF_vs_RFF.png?raw=true)
 --------------
@@ -49,5 +49,12 @@ Note: some scripts containing plot labels that depends on a local LaTeX compiler
 
 If you find this work or repository helpful, please kindly consider citing our work:
 ```
-to be appear soon
+@inproceedings{qing2022spectral,
+  title={Spectral Representation of Robustness Measures for Optimization Under Input Uncertainty},
+  author={Qing, Jixiang and Dhaene, Tom and Couckuyt, Ivo},
+  booktitle={International Conference on Machine Learning},
+  pages={18096--18121},
+  year={2022},
+  organization={PMLR}
+}
 ```
